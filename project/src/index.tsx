@@ -6,8 +6,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const Setting = {
+  sum: 300,
+} as const;
+
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App sum={Setting.sum} />
+  </React.StrictMode>
 );
