@@ -1,14 +1,38 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { TypeOffer } from '../../types/offer';
 
-function PlaceCard(): JSX.Element {
+
+type PlaceCardType = {
+  offer:TypeOffer;
+  key: number;
+};
+
+export function PlaceCard({ offer, key }:PlaceCardType): JSX.Element {
+  const [activeCard, setActiveCard] = useState(0);
+
   return (
-    <article className='cities__card place-card'>
+    <article
+      className='cities__card place-card'
+      onMouseOver={() => {
+        setActiveCard(offer.id);
+      }}
+      onMouseLeave={() => {
+        setActiveCard(0);
+      }}
+    >
+      {
+        offer.premium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className='cities__image-wrapper place-card__image-wrapper'>
-        <Link to={AppRoute.Room}>
+        <Link to={generatePath(AppRoute.Room, { id: `${offer.id}`})}>
           <img
             className='place-card__image'
-            src='img/room.jpg'
+            src={offer.foto[0].src}
             width='260'
             height='200'
             alt='Place img'
@@ -18,23 +42,21 @@ function PlaceCard(): JSX.Element {
       <div className='place-card__info'>
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
-            <b className='place-card__price-value'>&euro;80</b>
+            <b className='place-card__price-value'>&euro;{offer.price}</b>
             <span className='place-card__price-text'>&#47;&nbsp;night</span>
           </div>
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${offer.rating * 20}%` }}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
         <h2 className='place-card__name'>
-          <Link to={AppRoute.Room}>Wood and stone place</Link>
+          <Link to={generatePath(AppRoute.Room, { id: `${offer.id}`})}>{offer.title}</Link>
         </h2>
-        <p className='place-card__type'>Private room</p>
+        <p className='place-card__type'>{offer.typeOffer}{activeCard}</p>
       </div>
     </article>
   );
 }
-
-export default PlaceCard;
