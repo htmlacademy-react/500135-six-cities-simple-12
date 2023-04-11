@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function LoginScreen(): JSX.Element {
   return (
-    <body>
+    <div>
       <div className='page page--gray page--login'>
         <div style={{ display: 'none' }}>
           <svg xmlns='http://www.w3.org/2000/svg'>
@@ -79,7 +79,7 @@ function LoginScreen(): JSX.Element {
           </div>
         </main>
       </div>
-    </body>
+    </div>
   );
 }
 
